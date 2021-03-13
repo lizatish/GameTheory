@@ -156,6 +156,19 @@ p, li { white-space: pre-wrap; }
    <column/>
    <column/>
   </widget>
+  <widget class="QPushButton" name="findSaddlePointsButton">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>480</y>
+     <width>181</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Найти седловые точки</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

@@ -62,6 +62,9 @@ class Ui_Form(object):
         self.table.verticalHeader().setDefaultSectionSize(40)
         self.table.verticalHeader().setHighlightSections(False)
         self.table.verticalHeader().setMinimumSectionSize(40)
+        self.findSaddlePointsButton = QtWidgets.QPushButton(Form)
+        self.findSaddlePointsButton.setGeometry(QtCore.QRect(70, 480, 181, 25))
+        self.findSaddlePointsButton.setObjectName("findSaddlePointsButton")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -81,3 +84,4 @@ class Ui_Form(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Кол-во столбцов:</p></body></html>"))
         self.changeTableSizeButton.setText(_translate("Form", "Задать размеры таблицы"))
         self.loadDataButton.setText(_translate("Form", "Загрузить данные..."))
+        self.findSaddlePointsButton.setText(_translate("Form", "Найти седловые точки"))
