@@ -1,3 +1,4 @@
+import datetime
 import os
 import sys  # sys нужен для передачи argv в QApplication
 from PyQt5 import QtWidgets
@@ -22,15 +23,17 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
             f = open(filename[0], 'r')
             with f:
                 data = f.read()
-
         data = data.split('\n')[:-1]
-        data = [[int(elem) for elem in line.split()] for line in data]
-        self.table.setColumnWidth(len(data), len(data[0]))
+        data = [[elem for elem in line.split()] for line in data]
 
-        for row in range(len(data)):
-            for col in range(len(data[row])):
-                self.table.setItem(row, col, QTableWidgetItem(data[row][col]))
+        numrows = len(data)
+        numcols = len(data[0])
+        self.table.setColumnCount(numcols)
+        self.table.setRowCount(numrows)
 
+        for row in range(numrows):
+            for column in range(numcols):
+                self.table.setItem(row, column, QTableWidgetItem((data[row][column])))
 
 
 def main():
