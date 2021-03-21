@@ -23,7 +23,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         self.getWinMixedStrategyVal.clicked.connect(self.get_win_in_mixed_strategy)
 
         self.saveTableValuesButton.clicked.connect(self.save_table_values)
-        # self.changeTableSizeButton.clicked.connect(self.get_win_in_clean_strategy)
+        self.changeTableSizeButton.clicked.connect(self.change_table_size)
 
         self.loadDataVectorP.clicked.connect(self.load_data_vectorP)
         self.loadDataVectorQ.clicked.connect(self.load_data_vectorQ)
@@ -42,6 +42,14 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         for row in range(len(data)):
             min_row_vals.append(min(data[row]))
         return min_row_vals
+
+    def change_table_size(self):
+        self.table.setRowCount(self.row_num.value())
+        self.table.setColumnCount(self.col_num.value())
+
+    def change_table_size_to(self, row_num, col_num):
+        self.row_num.setValue(row_num)
+        self.col_num.setValue(col_num)
 
     def get_win_in_clean_strategy(self):
         if self.data:
@@ -100,7 +108,6 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         else:
             win_value = 'None'
         self.win_value_on_mixed_strategy.setText(win_value)
-
 
     def load_data_vectorP(self):
         filename = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите файл (txt, csv)",
@@ -177,6 +184,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
 
         self.table.setColumnCount(numcols)
         self.table.setRowCount(numrows)
+        self.change_table_size_to(numcols, numrows)
 
         self.table.clear()
         for row in range(numrows):
@@ -185,9 +193,9 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
 
     def save_table_values(self):
         self.data.clear()
-        for row in range(self.table.columnCount()):
+        for row in range(self.table.rowCount()):
             temp_row = []
-            for column in range(self.table.rowCount()):
+            for column in range(self.table.columnCount()):
                 item_val = QTableWidgetItem(self.table.item(row, column)).text()
                 temp_row.append(item_val)
             self.data.append(temp_row)
