@@ -41,56 +41,65 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         return min_row_vals
 
     def get_win_in_clean_strategy(self):
-        data = self.data.copy()
+        if self.data:
+            data = self.data.copy()
 
-        # Поиск максимумов в транспозе
-        max_col_vals = self.get_max_col_array()
-        # Поиск минимумов в оригинале
-        min_row_vals = self.get_min_row_array()
+            # Поиск максимумов в транспозе
+            max_col_vals = self.get_max_col_array()
+            # Поиск минимумов в оригинале
+            min_row_vals = self.get_min_row_array()
 
-        # Поиск седловых точек
-        self.saddle_points.clear()
-        for row, min_row_val in enumerate(min_row_vals):
-            min_row_idx = [i for i, j in enumerate(data[row]) if j == min_row_val]
-            for idx in min_row_idx:
-                if max_col_vals[idx] <= data[row][idx]:
-                    self.saddle_points.append((row, idx))
+            # Поиск седловых точек
+            self.saddle_points.clear()
+            for row, min_row_val in enumerate(min_row_vals):
+                min_row_idx = [i for i, j in enumerate(data[row]) if j == min_row_val]
+                for idx in min_row_idx:
+                    if max_col_vals[idx] <= data[row][idx]:
+                        self.saddle_points.append((row, idx))
 
-        # Выделение седловых точек жирным
-        bold_font = QFont()
-        bold_font.setBold(True)
-        for row, column in self.saddle_points:
-            self.table.item(row, column).setFont(bold_font)
+            # Выделение седловых точек жирным
+            bold_font = QFont()
+            bold_font.setBold(True)
+            for row, column in self.saddle_points:
+                self.table.item(row, column).setFont(bold_font)
 
-        # Напечатать значение игры в чистых стратегиях
-        if self.saddle_points:
-            win_saddle_point = self.saddle_points[0]
-            win_value = self.table.item(win_saddle_point[0], win_saddle_point[1]).text()
+            # Напечатать значение игры в чистых стратегиях
+            if self.saddle_points:
+                win_saddle_point = self.saddle_points[0]
+                win_value = self.table.item(win_saddle_point[0], win_saddle_point[1]).text()
+            else:
+                win_value = 'None'
         else:
             win_value = 'None'
+
         self.win_value_on_clean_strategy.setText(win_value)
 
     def get_win_in_mixed_strategy(self):
-        # Поиск максимума
-        self.v2_down_mixed_strategy.setText(str(max(self.get_min_row_array())))
-        # Поиск минимума
-        self.v1_up_mixed_strategy.setText(str(min(self.get_max_col_array())))
+        if self.data:
+            # Поиск максимума
+            self.v2_down_mixed_strategy.setText(str(max(self.get_min_row_array())))
+            # Поиск минимума
+            self.v1_up_mixed_strategy.setText(str(min(self.get_max_col_array())))
 
-        self.p = [float(elem) for elem in self.vector_p.toPlainText().split()]
-        self.q = [float(elem) for elem in self.vector_q.toPlainText().split()]
+            if self.vector_p.toPlainText() and self.vector_q.toPlainText():
+                self.p = [float(elem) for elem in self.vector_p.toPlainText().split()]
+                self.q = [float(elem) for elem in self.vector_q.toPlainText().split()]
 
-        xmin = min(np.dot(self.p, self.data))
-        ymax = max(np.dot(self.q, self.transpose_data))
+                xmin = min(np.dot(self.p, self.data))
+                ymax = max(np.dot(self.q, self.transpose_data))
 
-        if xmin == ymax:
-            win_value = str(xmin)
+                if xmin == ymax:
+                    win_value = str(xmin)
+                else:
+                    win_value = 'None'
+            else:
+                win_value = 'None'
         else:
             win_value = 'None'
         self.win_value_on_mixed_strategy.setText(win_value)
 
         # 0.625 0 0.375 0
         # 0 0.8125 0.1875
-        print(xmin, ymax)
 
     def load_data(self):
         filename = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите файл (txt, csv)",
