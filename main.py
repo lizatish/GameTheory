@@ -2,6 +2,7 @@ import sys
 
 import pandas as pd
 from PyQt5 import QtWidgets
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QTableWidgetItem
 
 import design
@@ -14,8 +15,12 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
 
         self.saddle_points = []
         self.data = []
-        self.loadDataButton.clicked.connect(self.load_data)  # Выполнить функцию browse_folder
-        self.findSaddlePointsButton.clicked.connect(self.find_saddle_poins)  # Выполнить функцию browse_folder
+
+        self.loadDataButton.clicked.connect(self.load_data)
+        self.findSaddlePointsButton.clicked.connect(self.find_saddle_poins)
+
+        self.saveTableValuesButton.clicked.connect(self.save_table_values)
+        self.changeTableSizeButton.clicked.connect(self.find_saddle_poins)
 
     def find_saddle_poins(self):
         data = self.data.copy()
@@ -35,10 +40,20 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
                 if max_col_vals[idx] <= data[row][idx]:
                     self.saddle_points.append((row, idx))
 
-        print(self.saddle_points)
+        bold_font = QFont()
+        bold_font.setBold(True)
+        for row, column in self.saddle_points:
+            self.table.item(row, column).setFont(bold_font)
+
+        if self.saddle_points:
+            win_saddle_point = self.saddle_points[0]
+            win_value = self.table.item(win_saddle_point[0], win_saddle_point[1]).text()
+        else:
+            win_value = 'None'
+        self.win_value_on_clean_strategy.setText(win_value)
 
     def load_data(self):
-        filename = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите фвйл (txt, csv)",
+        filename = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите файл (txt, csv)",
                                                          "/home/liza/PycharmProjects/gameTheory",
                                                          "xlsx (*.xlsx);; txt (*.txt)")
 
@@ -49,8 +64,8 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         else:
             data = self.read_data_from_xlsx(filename)
 
-        self.set_table_data(data)
         self.data = data
+        self.set_table_data()
 
     def read_data_from_xlsx(self, filename):
         if filename:
@@ -67,9 +82,9 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         data = [[int(elem) for elem in line.split()] for line in data]
         return data
 
-    def set_table_data(self, data):
-        numrows = len(data)
-        numcols = len(data[0])
+    def set_table_data(self):
+        numrows = len(self.data)
+        numcols = len(self.data[0])
 
         self.table.setColumnCount(numcols)
         self.table.setRowCount(numrows)
@@ -77,7 +92,18 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         self.table.clear()
         for row in range(numrows):
             for column in range(numcols):
-                self.table.setItem(row, column, QTableWidgetItem((str(data[row][column]))))
+                self.table.setItem(row, column, QTableWidgetItem((str(self.data[row][column]))))
+
+    def save_table_values(self):
+
+        self.data.clear()
+        for row in range(self.table.columnCount()):
+            temp_row = []
+            for column in range(self.table.rowCount()):
+                item_val = QTableWidgetItem(self.table.item(row, column)).text()
+                temp_row.append(item_val)
+            self.data.append(temp_row)
+        self.set_table_data()
 
 
 def main():
