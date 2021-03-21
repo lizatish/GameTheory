@@ -303,6 +303,32 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
+  <widget class="QPushButton" name="getStrictReduction">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>530</y>
+     <width>341</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Рассчитать строгую редукцию</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="getUnstrictReduction">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>560</y>
+     <width>341</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Рассчитать нестрогую редукцию</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

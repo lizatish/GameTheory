@@ -28,6 +28,95 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         self.loadDataVectorP.clicked.connect(self.load_data_vectorP)
         self.loadDataVectorQ.clicked.connect(self.load_data_vectorQ)
 
+        self.getStrictReduction.clicked.connect(self.get_strict_reduction)
+        self.getUnstrictReduction.clicked.connect(self.get_unstrict_reduction)
+
+    def get_strict_reduction(self):
+
+        if len(self.data) > 1:
+            is_break = False
+            for idx, first_row in enumerate(self.data):
+                for second_row in self.data[idx + 1:]:
+                    if all(x > y for x, y in zip(first_row, second_row)):
+                        self.data.pop(idx)
+                        is_break = True
+                        break
+                    elif all(x < y for x, y in zip(first_row, second_row)):
+                        self.data.pop(idx + 1)
+                        is_break = True
+                        break
+
+                if is_break:
+                    break
+
+            if is_break:
+                self.set_table_data(self.data)
+
+            if len(self.data) > 1:
+                return
+
+            is_break = False
+            for idx, first_row in enumerate(self.transpose_data):
+                for second_row in self.transpose_data[idx + 1:]:
+                    if all(x > y for x, y in zip(first_row, second_row)):
+                        self.transpose_data.pop(idx)
+                        is_break = True
+                        break
+                    elif all(x < y for x, y in zip(first_row, second_row)):
+                        self.transpose_data.pop(idx + 1)
+                        is_break = True
+                        break
+
+                if is_break:
+                    break
+
+            if is_break:
+                self.set_table_data(list(map(list, zip(*self.transpose_data))))
+                self.save_table_values()
+
+    def get_unstrict_reduction(self):
+
+        if len(self.data) > 1:
+            is_break = False
+            for idx, first_row in enumerate(self.data):
+                for second_row in self.data[idx + 1:]:
+                    if all(x >= y for x, y in zip(first_row, second_row)):
+                        self.data.pop(idx)
+                        is_break = True
+                        break
+                    elif all(x <= y for x, y in zip(first_row, second_row)):
+                        self.data.pop(idx + 1)
+                        is_break = True
+                        break
+
+                if is_break:
+                    break
+
+            if is_break:
+                self.set_table_data(self.data)
+
+            if len(self.data) > 1:
+                return
+
+            is_break = False
+            for idx, first_row in enumerate(self.transpose_data):
+                for second_row in self.transpose_data[idx + 1:]:
+                    if all(x >= y for x, y in zip(first_row, second_row)):
+                        self.transpose_data.pop(idx)
+                        is_break = True
+                        break
+                    elif all(x <= y for x, y in zip(first_row, second_row)):
+                        self.transpose_data.pop(idx + 1)
+                        is_break = True
+                        break
+
+                if is_break:
+                    break
+
+            if is_break:
+                self.set_table_data(list(map(list, zip(*self.transpose_data))))
+                self.save_table_values()
+
     def get_max_col_array(self):
         data = self.data.copy()
         transpose_data = self.transpose_data.copy()
@@ -154,7 +243,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         self.data = data
         self.transpose_data = list(map(list, zip(*data)))
 
-        self.set_table_data()
+        self.set_table_data(self.data)
 
     def read_data_from_xlsx(self, filename, type='int'):
         if filename:
@@ -178,9 +267,11 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
             data = [[int(elem) for elem in line.split()] for line in data]
         return data
 
-    def set_table_data(self):
-        numrows = len(self.data)
-        numcols = len(self.data[0])
+    def set_table_data(self, data):
+        self.transpose_data = list(map(list, zip(*data)))
+
+        numrows = len(data)
+        numcols = len(data[0])
 
         self.table.setColumnCount(numcols)
         self.table.setRowCount(numrows)
@@ -189,7 +280,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         self.table.clear()
         for row in range(numrows):
             for column in range(numcols):
-                self.table.setItem(row, column, QTableWidgetItem((str(self.data[row][column]))))
+                self.table.setItem(row, column, QTableWidgetItem((str(data[row][column]))))
 
     def save_table_values(self):
         self.data.clear()
@@ -200,8 +291,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
                 temp_row.append(item_val)
             self.data.append(temp_row)
 
-        self.transpose_data = list(map(list, zip(*self.data)))
-        self.set_table_data()
+        self.set_table_data(self.data)
 
 
 def main():

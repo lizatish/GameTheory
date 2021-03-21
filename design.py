@@ -140,6 +140,12 @@ class Ui_Form(object):
         self.loadDataVectorQ = QtWidgets.QPushButton(self.gridLayoutWidget_5)
         self.loadDataVectorQ.setObjectName("loadDataVectorQ")
         self.gridLayout_5.addWidget(self.loadDataVectorQ, 3, 0, 1, 1)
+        self.getStrictReduction = QtWidgets.QPushButton(Form)
+        self.getStrictReduction.setGeometry(QtCore.QRect(590, 530, 341, 25))
+        self.getStrictReduction.setObjectName("getStrictReduction")
+        self.getUnstrictReduction = QtWidgets.QPushButton(Form)
+        self.getUnstrictReduction.setGeometry(QtCore.QRect(590, 560, 341, 25))
+        self.getUnstrictReduction.setObjectName("getUnstrictReduction")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -170,3 +176,5 @@ class Ui_Form(object):
         self.label_2.setText(_translate("Form", "Значение игры в  смешанных стратегиях: "))
         self.label_4.setText(_translate("Form", "Вектор q:"))
         self.loadDataVectorQ.setText(_translate("Form", "Загрузить данные о векторе q..."))
+        self.getStrictReduction.setText(_translate("Form", "Рассчитать строгую редукцию"))
+        self.getUnstrictReduction.setText(_translate("Form", "Рассчитать нестрогую редукцию"))
