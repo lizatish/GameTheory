@@ -27,6 +27,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
 
         self.loadDataVectorP.clicked.connect(self.load_data_vectorP)
         self.loadDataVectorQ.clicked.connect(self.load_data_vectorQ)
+        self.savePQValues.clicked.connect(self.save_data_vectorsPQ)
 
         self.getStrictReduction.clicked.connect(self.get_strict_reduction)
         self.getUnstrictReduction.clicked.connect(self.get_unstrict_reduction)
@@ -118,7 +119,6 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
                 self.save_table_values()
 
     def get_max_col_array(self):
-        data = self.data.copy()
         transpose_data = self.transpose_data.copy()
         max_col_vals = []
         for row in range(len(transpose_data)):
@@ -228,6 +228,10 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         self.q = data[0]
         self.vector_q.setText(str(self.q))
 
+    def save_data_vectorsPQ(self):
+        self.vector_p.setText(self.vector_p.toPlainText())
+        self.vector_q.setText(self.vector_q.toPlainText())
+
     def load_data(self):
         filename = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите файл (txt, csv)",
                                                          "/home/liza/PycharmProjects/gameTheory",
@@ -275,7 +279,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
 
         self.table.setColumnCount(numcols)
         self.table.setRowCount(numrows)
-        self.change_table_size_to(numcols, numrows)
+        self.change_table_size_to(numrows, numcols)
 
         self.table.clear()
         for row in range(numrows):

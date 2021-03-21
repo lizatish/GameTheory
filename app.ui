@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1070</width>
-    <height>857</height>
+    <width>1030</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -130,7 +130,7 @@
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>370</y>
+     <y>380</y>
      <width>431</width>
      <height>91</height>
     </rect>
@@ -148,24 +148,10 @@
     </item>
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="3">
-       <widget class="QSpinBox" name="col_num">
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="value">
-         <number>7</number>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QTextBrowser" name="textBrowser_2">
-        <property name="html">
-         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Кол-во строк:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Кол-во столбцов:</string>
         </property>
        </widget>
       </item>
@@ -179,14 +165,20 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QTextBrowser" name="textBrowser">
-        <property name="html">
-         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Кол-во столбцов:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <item row="0" column="3">
+       <widget class="QSpinBox" name="col_num">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>7</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Кол-во строк:</string>
         </property>
        </widget>
       </item>
@@ -204,27 +196,34 @@ p, li { white-space: pre-wrap; }
   <widget class="QWidget" name="gridLayoutWidget_5">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>490</y>
+     <x>10</x>
+     <y>450</y>
      <width>501</width>
-     <height>211</height>
+     <height>251</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_5">
     <property name="sizeConstraint">
      <enum>QLayout::SetMaximumSize</enum>
     </property>
-    <item row="0" column="0">
-     <widget class="QPushButton" name="getWinMixedStrategyVal">
-      <property name="text">
-       <string>Найти значение игры в смешанных стратегиях</string>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="0">
      <widget class="QPushButton" name="loadDataVectorP">
       <property name="text">
        <string>Загрузить данные о векторе p...</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QPushButton" name="loadDataVectorQ">
+      <property name="text">
+       <string>Загрузить данные о векторе q...</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="getWinMixedStrategyVal">
+      <property name="text">
+       <string>Найти значение игры в смешанных стратегиях</string>
       </property>
      </widget>
     </item>
@@ -294,10 +293,10 @@ p, li { white-space: pre-wrap; }
       </item>
      </layout>
     </item>
-    <item row="3" column="0">
-     <widget class="QPushButton" name="loadDataVectorQ">
+    <item row="4" column="0">
+     <widget class="QPushButton" name="savePQValues">
       <property name="text">
-       <string>Загрузить данные о векторе q...</string>
+       <string>Сохранить значения векторов p и q</string>
       </property>
      </widget>
     </item>
@@ -306,8 +305,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="getStrictReduction">
    <property name="geometry">
     <rect>
-     <x>590</x>
-     <y>530</y>
+     <x>580</x>
+     <y>510</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -319,8 +318,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="getUnstrictReduction">
    <property name="geometry">
     <rect>
-     <x>590</x>
-     <y>560</y>
+     <x>580</x>
+     <y>540</y>
      <width>341</width>
      <height>25</height>
     </rect>
