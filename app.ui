@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1070</width>
-    <height>764</height>
+    <height>857</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -129,13 +129,16 @@
   <widget class="QWidget" name="gridLayoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>360</y>
+     <x>580</x>
+     <y>370</y>
      <width>431</width>
      <height>91</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_4">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMaximumSize</enum>
+    </property>
     <item row="2" column="0">
      <widget class="QPushButton" name="saveTableValuesButton">
       <property name="text">
@@ -201,13 +204,16 @@ p, li { white-space: pre-wrap; }
   <widget class="QWidget" name="gridLayoutWidget_5">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>480</y>
+     <x>40</x>
+     <y>490</y>
      <width>501</width>
-     <height>151</height>
+     <height>211</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_5">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMaximumSize</enum>
+    </property>
     <item row="0" column="0">
      <widget class="QPushButton" name="getWinMixedStrategyVal">
       <property name="text">
@@ -215,25 +221,19 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="loadDataVectorP">
+      <property name="text">
+       <string>Загрузить данные о векторе p...</string>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="0">
      <layout class="QGridLayout" name="gridLayout_6">
-      <item row="4" column="1">
-       <widget class="QTextEdit" name="vector_q"/>
-      </item>
-      <item row="3" column="1">
-       <widget class="QTextEdit" name="vector_p"/>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="win_value_on_mixed_strategy">
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_6">
         <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Вектор q:</string>
+         <string>Нижнее значение игры в чистых стратегиях: </string>
         </property>
        </widget>
       </item>
@@ -251,17 +251,24 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Нижнее значение игры в чистых стратегиях: </string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>Значение игры в  смешанных стратегиях: </string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="win_value_on_mixed_strategy">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Вектор q:</string>
         </property>
        </widget>
       </item>
@@ -272,6 +279,12 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
       </item>
+      <item row="4" column="1">
+       <widget class="QTextEdit" name="vector_q"/>
+      </item>
+      <item row="3" column="1">
+       <widget class="QTextEdit" name="vector_p"/>
+      </item>
       <item row="1" column="1">
        <widget class="QLabel" name="v1_up_mixed_strategy">
         <property name="text">
@@ -280,6 +293,13 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
      </layout>
+    </item>
+    <item row="3" column="0">
+     <widget class="QPushButton" name="loadDataVectorQ">
+      <property name="text">
+       <string>Загрузить данные о векторе q...</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

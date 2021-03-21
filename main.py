@@ -25,6 +25,9 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         self.saveTableValuesButton.clicked.connect(self.save_table_values)
         # self.changeTableSizeButton.clicked.connect(self.get_win_in_clean_strategy)
 
+        self.loadDataVectorP.clicked.connect(self.load_data_vectorP)
+        self.loadDataVectorQ.clicked.connect(self.load_data_vectorQ)
+
     def get_max_col_array(self):
         data = self.data.copy()
         transpose_data = self.transpose_data.copy()
@@ -82,8 +85,8 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
             self.v1_up_mixed_strategy.setText(str(min(self.get_max_col_array())))
 
             if self.vector_p.toPlainText() and self.vector_q.toPlainText():
-                self.p = [float(elem) for elem in self.vector_p.toPlainText().split()]
-                self.q = [float(elem) for elem in self.vector_q.toPlainText().split()]
+                self.p = [float(elem) for elem in self.vector_p.toPlainText()[1:-1].split(', ')]
+                self.q = [float(elem) for elem in self.vector_q.toPlainText()[1:-1].split(', ')]
 
                 xmin = min(np.dot(self.p, self.data))
                 ymax = max(np.dot(self.q, self.transpose_data))
@@ -98,8 +101,36 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
             win_value = 'None'
         self.win_value_on_mixed_strategy.setText(win_value)
 
-        # 0.625 0 0.375 0
-        # 0 0.8125 0.1875
+
+    def load_data_vectorP(self):
+        filename = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите файл (txt, csv)",
+                                                         "/home/liza/PycharmProjects/gameTheory",
+                                                         "txt (*.txt);; xlsx (*.xlsx)")
+
+        filename = filename[0]
+        ext = filename.split('.')[-1]
+        if ext == 'txt':
+            data = self.read_data_from_txt(filename, type='float')
+        else:
+            data = self.read_data_from_xlsx(filename, type='float')
+
+        self.p = data[0]
+        self.vector_p.setText(str(self.p))
+
+    def load_data_vectorQ(self):
+        filename = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите файл (txt, csv)",
+                                                         "/home/liza/PycharmProjects/gameTheory",
+                                                         "txt (*.txt);; xlsx (*.xlsx)")
+
+        filename = filename[0]
+        ext = filename.split('.')[-1]
+        if ext == 'txt':
+            data = self.read_data_from_txt(filename, type='float')
+        else:
+            data = self.read_data_from_xlsx(filename, type='float')
+
+        self.q = data[0]
+        self.vector_q.setText(str(self.q))
 
     def load_data(self):
         filename = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите файл (txt, csv)",
@@ -118,19 +149,26 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
 
         self.set_table_data()
 
-    def read_data_from_xlsx(self, filename):
+    def read_data_from_xlsx(self, filename, type='int'):
         if filename:
             df = pd.read_excel(filename, header=None)
             data = df.values.tolist()
+            if type == 'float':
+                data = [[float(elem) for elem in line.split()] for line in data]
+            else:
+                data = [[int(elem) for elem in line.split()] for line in data]
             return data
 
-    def read_data_from_txt(self, filename):
+    def read_data_from_txt(self, filename, type='int'):
         if filename:
             f = open(filename, 'r')
             with f:
                 data = f.read()
         data = data.split('\n')[:-1]
-        data = [[int(elem) for elem in line.split()] for line in data]
+        if type == 'float':
+            data = [[float(elem) for elem in line.split()] for line in data]
+        else:
+            data = [[int(elem) for elem in line.split()] for line in data]
         return data
 
     def set_table_data(self):
