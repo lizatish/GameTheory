@@ -34,89 +34,50 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
 
     def get_strict_reduction(self):
 
-        if len(self.data) > 1:
-            is_break = False
-            for idx, first_row in enumerate(self.data):
-                for second_row in self.data[idx + 1:]:
-                    if all(x > y for x, y in zip(first_row, second_row)):
-                        self.data.pop(idx)
-                        is_break = True
-                        break
-                    elif all(x < y for x, y in zip(first_row, second_row)):
-                        self.data.pop(idx + 1)
-                        is_break = True
-                        break
+        sorted_data = list(reversed(list(sorted(self.data))))
+        deleted = set()
+        for idx, first_row in enumerate(sorted_data):
+            for second_row in sorted_data[idx + 1:]:
+                if all(x > y for x, y in zip(first_row, second_row)):
+                    deleted.add(tuple(second_row))
+        for elem in deleted:
+            self.data.pop(self.data.index(list(elem)))
+        self.set_table_data(self.data)
 
-                if is_break:
-                    break
-
-            if is_break:
-                self.set_table_data(self.data)
-
-            if len(self.data) > 1:
-                return
-
-            is_break = False
-            for idx, first_row in enumerate(self.transpose_data):
-                for second_row in self.transpose_data[idx + 1:]:
-                    if all(x > y for x, y in zip(first_row, second_row)):
-                        self.transpose_data.pop(idx)
-                        is_break = True
-                        break
-                    elif all(x < y for x, y in zip(first_row, second_row)):
-                        self.transpose_data.pop(idx + 1)
-                        is_break = True
-                        break
-
-                if is_break:
-                    break
-
-            if is_break:
-                self.set_table_data(list(map(list, zip(*self.transpose_data))))
-                self.save_table_values()
+        sorted_data = list(reversed(list(sorted(self.transpose_data, reverse=True))))
+        deleted = set()
+        for idx, first_row in enumerate(sorted_data):
+            for second_row in sorted_data[idx + 1:]:
+                if all(x < y for x, y in zip(first_row, second_row)):
+                    deleted.add(tuple(second_row))
+        for elem in deleted:
+            self.transpose_data.pop(self.transpose_data.index(list(elem)))
+        self.data = list(map(list, zip(*self.transpose_data)))
+        self.set_table_data(self.data)
+        self.save_table_values()
 
     def get_unstrict_reduction(self):
+        sorted_data = list(reversed(list(sorted(self.data))))
+        deleted = set()
+        for idx, first_row in enumerate(sorted_data):
+            for second_row in sorted_data[idx + 1:]:
+                if all(x >= y for x, y in zip(first_row, second_row)):
+                    deleted.add(tuple(second_row))
+        for elem in deleted:
+            self.data.pop(self.data.index(list(elem)))
+        self.set_table_data(self.data)
 
-        if len(self.data) > 1:
-            is_break = False
-            for idx, first_row in enumerate(self.data):
-                for second_row in self.data[idx + 1:]:
-                    if all(x >= y for x, y in zip(first_row, second_row)):
-                        self.data.pop(idx)
-                        is_break = True
-                        break
-                    elif all(x <= y for x, y in zip(first_row, second_row)):
-                        self.data.pop(idx + 1)
-                        is_break = True
-                        break
-
-                if is_break:
-                    break
-
-            if is_break:
-                self.set_table_data(self.data)
-
-            if len(self.data) > 1:
-                return
-
-            is_break = False
-            for idx, first_row in enumerate(self.transpose_data):
-                for second_row in self.transpose_data[idx + 1:]:
-                    if all(x >= y for x, y in zip(first_row, second_row)):
-                        self.transpose_data.pop(idx)
-                        is_break = True
-                        break
-                    elif all(x <= y for x, y in zip(first_row, second_row)):
-                        self.transpose_data.pop(idx + 1)
-                        is_break = True
-                        break
-
-                if is_break:
-                    break
-
-            if is_break:
-                self.set_table_data(list(map(list, zip(*self.transpose_data))))
-                self.save_table_values()
+        sorted_data = list(reversed(list(sorted(self.transpose_data, reverse=True))))
+        deleted = set()
+        for idx, first_row in enumerate(sorted_data):
+            for second_row in sorted_data[idx + 1:]:
+                if all(x <= y for x, y in zip(first_row, second_row)):
+                    deleted.add(tuple(second_row))
+        for elem in deleted:
+            self.transpose_data.pop(self.transpose_data.index(list(elem)))
+        self.data = list(map(list, zip(*self.transpose_data)))
+        self.set_table_data(self.data)
+        self.save_table_values()
 
     def get_max_col_array(self):
         transpose_data = self.transpose_data.copy()
@@ -292,7 +253,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
             temp_row = []
             for column in range(self.table.columnCount()):
                 item_val = QTableWidgetItem(self.table.item(row, column)).text()
-                temp_row.append(item_val)
+                temp_row.append(int(item_val))
             self.data.append(temp_row)
 
         self.set_table_data(self.data)
