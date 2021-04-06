@@ -32,6 +32,28 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         self.getStrictReduction.clicked.connect(self.get_strict_reduction)
         self.getUnstrictReduction.clicked.connect(self.get_unstrict_reduction)
 
+        self.get2in2solution.clicked.connect(self.get_mixed_strategy_solution_2in2)
+
+    def get_mixed_strategy_solution_2in2(self):
+
+        h22 = self.data[1][1]
+        h21 = self.data[1][0]
+        h11 = self.data[0][0]
+        h12 = self.data[0][1]
+
+        a = h22 - h21
+        b = a + h11 - h12
+        p1 = a / b
+        q1 = (h22 - h12) / b
+        W = (h11 * h22 - h12 * h21) / b
+        p = [p1, 1 - p1]
+        q = [q1, 1 - q1]
+
+        if round(min(np.dot(p, self.data)), 4) == round(max(np.dot(self.data, q)), 4):
+            print(W)
+        else:
+            print('Ошибка ')
+
     def get_strict_reduction(self):
 
         sorted_data = list(reversed(list(sorted(self.data))))

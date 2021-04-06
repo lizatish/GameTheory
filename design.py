@@ -15,7 +15,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.setEnabled(True)
-        Form.resize(1030, 720)
+        Form.resize(1030, 877)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -57,7 +57,7 @@ class Ui_Form(object):
         self.getWinCleanStrategyVal.setObjectName("getWinCleanStrategyVal")
         self.gridLayout_3.addWidget(self.getWinCleanStrategyVal, 0, 0, 1, 1)
         self.gridLayoutWidget_4 = QtWidgets.QWidget(Form)
-        self.gridLayoutWidget_4.setGeometry(QtCore.QRect(580, 380, 431, 91))
+        self.gridLayoutWidget_4.setGeometry(QtCore.QRect(580, 380, 431, 92))
         self.gridLayoutWidget_4.setObjectName("gridLayoutWidget_4")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.gridLayoutWidget_4)
         self.gridLayout_4.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
@@ -149,6 +149,9 @@ class Ui_Form(object):
         self.getUnstrictReduction = QtWidgets.QPushButton(Form)
         self.getUnstrictReduction.setGeometry(QtCore.QRect(580, 540, 341, 25))
         self.getUnstrictReduction.setObjectName("getUnstrictReduction")
+        self.get2in2solution = QtWidgets.QPushButton(Form)
+        self.get2in2solution.setGeometry(QtCore.QRect(560, 580, 441, 31))
+        self.get2in2solution.setObjectName("get2in2solution")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -174,3 +177,4 @@ class Ui_Form(object):
         self.savePQValues.setText(_translate("Form", "Сохранить значения векторов p и q"))
         self.getStrictReduction.setText(_translate("Form", "Рассчитать строгую редукцию"))
         self.getUnstrictReduction.setText(_translate("Form", "Рассчитать нестрогую редукцию"))
+        self.get2in2solution.setText(_translate("Form", "Найти аналитическое и графическое решение матрицы 2х2"))
