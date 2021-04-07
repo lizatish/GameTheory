@@ -216,8 +216,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
             data = df.values.tolist()
             if type == 'float':
                 data = [[float(elem) for elem in line.split()] for line in data]
-            else:
-                data = [[int(elem) for elem in line.split()] for line in data]
+
             return data
 
     def read_data_from_txt(self, filename, type='int'):
