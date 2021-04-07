@@ -1,5 +1,6 @@
 import sys
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from PyQt5 import QtWidgets
@@ -31,6 +32,45 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
 
         self.getStrictReduction.clicked.connect(self.get_strict_reduction)
         self.getUnstrictReduction.clicked.connect(self.get_unstrict_reduction)
+
+        self.get2in2solution.clicked.connect(self.get_mixed_strategy_solution_2in2)
+        self.plot2in2solution.clicked.connect(self.plot_mixed_strategy_solution_2in2)
+
+    def plot_mixed_strategy_solution_2in2(self):
+        x1 = [0, 1]
+        y1 = [self.data[0][0], self.data[1][0]]
+        x2 = [0, 1]
+        y2 = [self.data[0][1], self.data[1][1]]
+        self.plot.canvas.ax.plot(x1, y1, color='lightblue', linewidth=3)
+        self.plot.canvas.ax.plot(x2, y2, color='darkgreen', marker='^')
+        self.plot.canvas.ax.xaxis.set_data_interval(0, 1)
+        self.plot.canvas.ax.yaxis.set_data_interval(0, max(y2 + y1) + 5)
+
+        x, y = self.get_intersect((x1[0], y1[0]), (x1[1], y1[1]), (x2[0], y2[0]), (x2[1], y2[1]))
+        self.plot.canvas.ax.scatter(x, y, s=100, color='red')
+        self.plot.canvas.draw()
+        self.win_plot2in2.setText(str(round(y, 4)))
+        self.xy_analytic2in2.setText(str(f'({str(round(x, 4))}, {str(round(y, 4))})'))
+
+    def get_mixed_strategy_solution_2in2(self):
+        if self.data:
+            h22 = self.data[1][1]
+            h21 = self.data[1][0]
+            h11 = self.data[0][0]
+            h12 = self.data[0][1]
+
+            a = h22 - h21
+            b = a + h11 - h12
+            p1 = a / b
+            q1 = (h22 - h12) / b
+            W = (h11 * h22 - h12 * h21) / b
+            p = [p1, 1 - p1]
+            q = [q1, 1 - q1]
+
+            if round(min(np.dot(p, self.data)), 4) == round(max(np.dot(self.data, q)), 4):
+                self.win_analytic2in2.setText(str(round(W, 4)))
+            else:
+                self.win_analytic2in2.setText('Ошибка')
 
     def get_strict_reduction(self):
 
@@ -173,6 +213,23 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
 
         self.p = data[0]
         self.vector_p.setText(str(self.p))
+
+    def get_intersect(self, a1, a2, b1, b2):
+        """
+        Returns the point of intersection of the lines passing through a2,a1 and b2,b1.
+        a1: [x, y] a point on the first line
+        a2: [x, y] another point on the first line
+        b1: [x, y] a point on the second line
+        b2: [x, y] another point on the second line
+        """
+        s = np.vstack([a1, a2, b1, b2])  # s for stacked
+        h = np.hstack((s, np.ones((4, 1))))  # h for homogeneous
+        l1 = np.cross(h[0], h[1])  # get first line
+        l2 = np.cross(h[2], h[3])  # get second line
+        x, y, z = np.cross(l1, l2)  # point of intersection
+        if z == 0:  # lines are parallel
+            return (float('inf'), float('inf'))
+        return (x / z, y / z)
 
     def load_data_vectorQ(self):
         filename = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите файл (txt, csv)",
