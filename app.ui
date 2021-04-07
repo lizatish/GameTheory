@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1030</width>
-    <height>877</height>
+    <width>1142</width>
+    <height>881</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -129,9 +129,9 @@
   <widget class="QWidget" name="gridLayoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>380</y>
-     <width>431</width>
+     <x>530</x>
+     <y>350</y>
+     <width>341</width>
      <height>92</height>
     </rect>
    </property>
@@ -305,8 +305,8 @@
   <widget class="QPushButton" name="getStrictReduction">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>510</y>
+     <x>530</x>
+     <y>460</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -318,8 +318,8 @@
   <widget class="QPushButton" name="getUnstrictReduction">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>540</y>
+     <x>530</x>
+     <y>490</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -328,18 +328,88 @@
     <string>Рассчитать нестрогую редукцию</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="get2in2solution">
+  <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>580</y>
-     <width>441</width>
-     <height>31</height>
+     <x>620</x>
+     <y>530</y>
+     <width>345</width>
+     <height>301</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Найти аналитическое и графическое решение матрицы 2х2</string>
+   <layout class="QGridLayout" name="gridLayout_7">
+    <item row="2" column="0">
+     <widget class="QPushButton" name="plot2in2solution">
+      <property name="text">
+       <string>Построить график</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QWidget" name="plot" native="true"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="get2in2solution">
+      <property name="text">
+       <string>Найти аналитическое  решение матрицы 2х2</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>740</y>
+     <width>361</width>
+     <height>91</height>
+    </rect>
    </property>
+   <layout class="QGridLayout" name="gridLayout_8">
+    <item row="0" column="1">
+     <widget class="QLabel" name="win_analytic2in2">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>Аналитическая цена игры: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_10">
+      <property name="text">
+       <string>Графическая цена игры:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_11">
+      <property name="text">
+       <string>Кординаты точки пересечения: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="win_plot2in2">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLabel" name="xy_analytic2in2">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
