@@ -68,7 +68,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
                 if y1[0] < y2[0]:
                     intersects.append((ix, iy, i, i + 1))
                 else:
-                    intersects.append((ix, iy, i+1, i))
+                    intersects.append((ix, iy, i + 1, i))
 
             if n > 2:
                 y1 = (data[0][0] - data[1][0]) * p1 + data[1][0]
@@ -76,42 +76,45 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
                 ix, iy = self.get_intersect((p1[0], y1[0]), (p1[1], y1[1]),
                                             (p1[0], y2[0]), (p1[1], y2[1]))
                 if y1[0] < y2[0]:
-                    intersects.append((ix, iy, 0,len(data)))
+                    intersects.append((ix, iy, 0, len(data)))
                 else:
                     intersects.append((ix, iy, len(data), 0))
 
             intersects.sort(key=lambda x: x[0])
+            clean_intersects = []
             red_points = []
             for i in range(len(intersects)):
                 if not red_points or red_points[-1] == intersects[i][2]:
                     red_points.append(intersects[i][3])
                     self.plot2.canvas.ax.scatter(intersects[i][0], intersects[i][1], s=40, color='red')
-
+                    clean_intersects.append(intersects[i])
             self.plot2.canvas.ax.grid()
             self.plot2.canvas.draw()
 
-            # win = min(intersects)
-            # if intersects.count(win) == 1:
-            #     self.win_analyticgraphic.setText(str(win)[:7])
-            #
-            #     t = intersects.index(win)
-            #     u = intersects.index(win) + 1
-            #     z = data[1][u] - data[1][t]
-            #     x = z + data[0][t] - data[0][u]
-            #
-            #     p1star = z / x
-            #     y = (data[1][u] - data[0][u]) / x
-            #     W = abs((data[0][t] * data[1][u] - data[0][u] * data[1][t]) / x)
-            #     self.win_analyticgraphic_check.setText(str(W)[:7])
-            #
-            #     pstar = (p1star, 1 - p1star)
-            #     self.maximin_first_player.setText('(' + ', '.join(str(elem)[:4] for elem in pstar) + ')')
-            #
-            #     # TODO как посчитать вектор q
-            #     # qstar = (q1star, q2star, q3star)
-            #     # self.maximin_first_player.setText(str(qstar))
-            # else:
-            #     pass
+            clean_intersects.sort(key=lambda x: abs(x[1]))
+            win = abs(clean_intersects[0][1])
+            second = abs(clean_intersects[1][1])
+            if win != second:
+                self.win_analyticgraphic.setText(str(win)[:7])
+
+                t = clean_intersects[0][2]
+                u = clean_intersects[0][3]
+                z = data[1][u] - data[1][t]
+                x = z + data[0][t] - data[0][u]
+
+                p1star = z / x
+                y = (data[1][u] - data[0][u]) / x
+                W = abs((data[0][t] * data[1][u] - data[0][u] * data[1][t]) / x)
+                self.win_analyticgraphic_check.setText(str(W)[:7])
+
+                pstar = (p1star, 1 - p1star)
+                self.maximin_first_player.setText('(' + ', '.join(str(elem)[:4] for elem in pstar) + ')')
+
+                # TODO как посчитать вектор q
+                # qstar = (q1star, q2star, q3star)
+                # self.maximin_first_player.setText(str(qstar))
+            else:
+                pass
 
     def plot_mixed_strategy_solution_2in2(self):
         if self.data:
