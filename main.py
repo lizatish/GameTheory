@@ -1,6 +1,5 @@
 import sys
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from PyQt5 import QtWidgets
@@ -36,21 +35,60 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         self.get2in2solution.clicked.connect(self.get_mixed_strategy_solution_2in2)
         self.plot2in2solution.clicked.connect(self.plot_mixed_strategy_solution_2in2)
 
-    def plot_mixed_strategy_solution_2in2(self):
-        x1 = [0, 1]
-        y1 = [self.data[0][0], self.data[1][0]]
-        x2 = [0, 1]
-        y2 = [self.data[0][1], self.data[1][1]]
-        self.plot.canvas.ax.plot(x1, y1, color='lightblue', linewidth=3)
-        self.plot.canvas.ax.plot(x2, y2, color='darkgreen', marker='^')
-        self.plot.canvas.ax.xaxis.set_data_interval(0, 1)
-        self.plot.canvas.ax.yaxis.set_data_interval(0, max(y2 + y1) + 5)
+        self.getsolution_2n_m2.clicked.connect(self.get_grapho_analytical_solution)
 
-        x, y = self.get_intersect((x1[0], y1[0]), (x1[1], y1[1]), (x2[0], y2[0]), (x2[1], y2[1]))
-        self.plot.canvas.ax.scatter(x, y, s=100, color='red')
-        self.plot.canvas.draw()
-        self.win_plot2in2.setText(str(round(y, 4)))
-        self.xy_analytic2in2.setText(str(f'({str(round(x, 4))}, {str(round(y, 4))})'))
+    def get_grapho_analytical_solution(self):
+        if self.data:
+            n = len(self.data)
+            m = len(self.data[0])
+
+            h11, h12, h13 = self.data[0][0], self.data[0][1], self.data[0][2]
+            h21, h22, h23 = self.data[1][0], self.data[1][1], self.data[1][2]
+
+            p1 = np.arange(2)
+            y1 = (h11 - h21) * p1 + h21
+            y2 = (h12 - h22) * p1 + h22
+            y3 = (h13 - h23) * p1 + h23
+
+            self.plot2.canvas.ax.plot(p1, y1, color='lightblue', linewidth=1.5)
+            self.plot2.canvas.ax.plot(p1, y2, color='darkgreen', linewidth=1.5)
+            self.plot2.canvas.ax.plot(p1, y3, color='blue', linewidth=1.5)
+            self.plot2.canvas.ax.grid()
+
+            intersect1_x, intersect1_y = self.get_intersect((p1[0], y1[0]), (p1[1], y1[1]),
+                                                            (p1[0], y2[0]), (p1[1], y2[1]))
+            intersect2_x, intersect2_y = self.get_intersect((p1[0], y2[0]), (p1[1], y2[1]),
+                                                            (p1[0], y3[0]), (p1[1], y3[1]))
+            self.plot2.canvas.ax.scatter(intersect1_x, intersect1_y, s=40, color='red')
+            self.plot2.canvas.ax.scatter(intersect2_x, intersect2_y, s=40, color='red')
+            self.plot2.canvas.draw()
+
+            if intersect1_y > intersect2_y:
+                t = 1
+                u = 2
+            else:
+                t = 2
+                u = 3
+
+            win = min(abs(intersect1_y), abs(intersect2_y))
+            self.win_analyticgraphic.setText(str(win))
+
+    def plot_mixed_strategy_solution_2in2(self):
+        if self.data:
+            x = [0, 1]
+            y1 = [self.data[0][0], self.data[1][0]]
+            y2 = [self.data[0][1], self.data[1][1]]
+            self.plot.canvas.ax.plot(x, y1, color='lightblue', linewidth=1.5)
+            self.plot.canvas.ax.plot(x, y2, color='darkgreen', linewidth=1.5)
+            self.plot.canvas.ax.xaxis.set_data_interval(0, 1)
+            self.plot.canvas.ax.yaxis.set_data_interval(0, max(y2 + y1) + 5)
+
+            x, y = self.get_intersect((x[0], y1[0]), (x[1], y1[1]), (x[0], y2[0]), (x[1], y2[1]))
+            self.plot.canvas.ax.scatter(x, y, s=40, color='red')
+            self.plot.canvas.ax.grid()
+            self.plot.canvas.draw()
+            self.win_plot2in2.setText(str(round(y, 4)))
+            self.xy_analytic2in2.setText(str(f'({str(round(x, 4))}, {str(round(y, 4))})'))
 
     def get_mixed_strategy_solution_2in2(self):
         if self.data:

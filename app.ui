@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1142</width>
-    <height>881</height>
+    <width>1114</width>
+    <height>830</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,8 +25,8 @@
   <widget class="QPushButton" name="loadDataButton">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>340</y>
+     <x>10</x>
+     <y>370</y>
      <width>158</width>
      <height>25</height>
     </rect>
@@ -40,8 +40,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>801</width>
-     <height>321</height>
+     <width>411</width>
+     <height>351</height>
     </rect>
    </property>
    <property name="rowCount">
@@ -92,8 +92,8 @@
   <widget class="QWidget" name="gridLayoutWidget_3">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>380</y>
+     <x>790</x>
+     <y>270</y>
      <width>311</width>
      <height>61</height>
     </rect>
@@ -129,8 +129,8 @@
   <widget class="QWidget" name="gridLayoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>350</y>
+     <x>760</x>
+     <y>340</y>
      <width>341</width>
      <height>92</height>
     </rect>
@@ -196,9 +196,9 @@
   <widget class="QWidget" name="gridLayoutWidget_5">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>450</y>
-     <width>501</width>
+     <x>430</x>
+     <y>10</y>
+     <width>671</width>
      <height>251</height>
     </rect>
    </property>
@@ -220,26 +220,15 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QPushButton" name="getWinMixedStrategyVal">
-      <property name="text">
-       <string>Найти значение игры в смешанных стратегиях</string>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="0">
      <layout class="QGridLayout" name="gridLayout_6">
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Нижнее значение игры в чистых стратегиях: </string>
-        </property>
-       </widget>
+      <item row="3" column="1">
+       <widget class="QTextEdit" name="vector_p"/>
       </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_3">
+      <item row="1" column="1">
+       <widget class="QLabel" name="v1_up_mixed_strategy">
         <property name="text">
-         <string>Вектор p:</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -247,20 +236,6 @@
        <widget class="QLabel" name="label_5">
         <property name="text">
          <string>Верхнее значение игры в чистых стратегиях: </string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Значение игры в  смешанных стратегиях: </string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="win_value_on_mixed_strategy">
-        <property name="text">
-         <string/>
         </property>
        </widget>
       </item>
@@ -278,16 +253,34 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="win_value_on_mixed_strategy">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
       <item row="4" column="1">
        <widget class="QTextEdit" name="vector_q"/>
       </item>
-      <item row="3" column="1">
-       <widget class="QTextEdit" name="vector_p"/>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="v1_up_mixed_strategy">
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_3">
         <property name="text">
-         <string/>
+         <string>Вектор p:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Значение игры в  смешанных стратегиях: </string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Нижнее значение игры в чистых стратегиях: </string>
         </property>
        </widget>
       </item>
@@ -300,13 +293,20 @@
       </property>
      </widget>
     </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="getWinMixedStrategyVal">
+      <property name="text">
+       <string>Найти значение игры в смешанных стратегиях</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QPushButton" name="getStrictReduction">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>460</y>
+     <x>430</x>
+     <y>270</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -318,8 +318,8 @@
   <widget class="QPushButton" name="getUnstrictReduction">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>490</y>
+     <x>430</x>
+     <y>300</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -331,8 +331,8 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>620</x>
-     <y>530</y>
+     <x>10</x>
+     <y>400</y>
      <width>345</width>
      <height>301</height>
     </rect>
@@ -360,9 +360,9 @@
   <widget class="QWidget" name="gridLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>740</y>
-     <width>361</width>
+     <x>10</x>
+     <y>710</y>
+     <width>341</width>
      <height>91</height>
     </rect>
    </property>
@@ -404,6 +404,97 @@
     </item>
     <item row="2" column="1">
      <widget class="QLabel" name="xy_analytic2in2">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_6">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>400</y>
+     <width>351</width>
+     <height>301</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_9">
+    <item row="3" column="0">
+     <widget class="QWidget" name="plot2" native="true"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="getsolution_2n_m2">
+      <property name="text">
+       <string>Найти графоаналитическое решение матрицы 
+2хn или m*2</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_7">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>710</y>
+     <width>351</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_10">
+    <item row="2" column="1">
+     <widget class="QLabel" name="maximin_first_player">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_12">
+      <property name="text">
+       <string>Графическая цена игры</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="win_analyticgraphic">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_13">
+      <property name="text">
+       <string>Максимин первого игрока</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_14">
+      <property name="text">
+       <string>Минимакс второго игрока</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLabel" name="minimax_second_player">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_15">
+      <property name="text">
+       <string>Аналитическая цена игры: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="win_analyticgraphic_check">
       <property name="text">
        <string/>
       </property>
