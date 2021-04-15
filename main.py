@@ -38,40 +38,58 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         self.getsolution_2n_m2.clicked.connect(self.get_grapho_analytical_solution)
 
     def get_grapho_analytical_solution(self):
+
         if self.data:
-            n = len(self.data)
-            m = len(self.data[0])
+            has_reduction = True
+            while has_reduction:
+                has_reduction = self.get_unstrict_reduction()
+            self.plot2.canvas.ax.clear()
 
-            h11, h12, h13 = self.data[0][0], self.data[0][1], self.data[0][2]
-            h21, h22, h23 = self.data[1][0], self.data[1][1], self.data[1][2]
+            n = len(self.data[0])
+            m = len(self.data)
+            if m > n:
+                data = self.transpose_data
+                n, m = m, n
+            else:
+                data = self.data
 
+            color = ['y', 'm', 'c', 'g', 'b', 'k', 'darkgreen', 'lightblue', 'darkblue', 'darkgreen']
             p1 = np.arange(2)
-            y1 = (h11 - h21) * p1 + h21
-            y2 = (h12 - h22) * p1 + h22
-            y3 = (h13 - h23) * p1 + h23
+            for i in range(n):
+                y1 = (data[0][i] - data[1][i]) * p1 + data[1][i]
+                self.plot2.canvas.ax.plot(p1, y1, color=color[i], linewidth=1.5)
 
-            self.plot2.canvas.ax.plot(p1, y1, color='lightblue', linewidth=1.5)
-            self.plot2.canvas.ax.plot(p1, y2, color='darkgreen', linewidth=1.5)
-            self.plot2.canvas.ax.plot(p1, y3, color='blue', linewidth=1.5)
+            intersects = []
+            for i in range(n - 1):
+                y1 = (data[0][i] - data[1][i]) * p1 + data[1][i]
+                y2 = (data[0][i + 1] - data[1][i + 1]) * p1 + data[1][i + 1]
+                ix, iy = self.get_intersect((p1[0], y1[0]), (p1[1], y1[1]),
+                                            (p1[0], y2[0]), (p1[1], y2[1]))
+                if 1 >= ix >= 0:
+                    self.plot2.canvas.ax.scatter(ix, iy, s=40, color='red')
+                intersects.append(abs(iy))
             self.plot2.canvas.ax.grid()
-
-            intersect1_x, intersect1_y = self.get_intersect((p1[0], y1[0]), (p1[1], y1[1]),
-                                                            (p1[0], y2[0]), (p1[1], y2[1]))
-            intersect2_x, intersect2_y = self.get_intersect((p1[0], y2[0]), (p1[1], y2[1]),
-                                                            (p1[0], y3[0]), (p1[1], y3[1]))
-            self.plot2.canvas.ax.scatter(intersect1_x, intersect1_y, s=40, color='red')
-            self.plot2.canvas.ax.scatter(intersect2_x, intersect2_y, s=40, color='red')
             self.plot2.canvas.draw()
 
-            if intersect1_y > intersect2_y:
-                t = 1
-                u = 2
-            else:
-                t = 2
-                u = 3
+            win = min(intersects)
+            self.win_analyticgraphic.setText(str(win)[:7])
 
-            win = min(abs(intersect1_y), abs(intersect2_y))
-            self.win_analyticgraphic.setText(str(win))
+            t = intersects.index(win)
+            u = intersects.index(win) + 1
+            z = data[1][u] - data[1][t]
+            x = z + data[0][t] - data[0][u]
+
+            p1star = z / x
+            y = (data[1][u] - data[0][u]) / x
+            W = abs((data[0][t] * data[1][u] - data[0][u] * data[1][t]) / x)
+            self.win_analyticgraphic_check.setText(str(W)[:7])
+
+            pstar = (p1star, 1 - p1star)
+            self.maximin_first_player.setText('(' + ', '.join(str(elem)[:4] for elem in pstar)+')')
+
+            # TODO как посчитать вектор q
+            # qstar = (q1star, q2star, q3star)
+            # self.maximin_first_player.setText(str(qstar))
 
     def plot_mixed_strategy_solution_2in2(self):
         if self.data:
@@ -135,6 +153,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
         self.save_table_values()
 
     def get_unstrict_reduction(self):
+        has_reduction = False
         sorted_data = list(reversed(list(sorted(self.data))))
         deleted = set()
         for idx, first_row in enumerate(sorted_data):
@@ -143,6 +162,7 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
                     deleted.add(tuple(second_row))
         for elem in deleted:
             self.data.pop(self.data.index(list(elem)))
+            has_reduction = True
         self.set_table_data(self.data)
 
         sorted_data = list(reversed(list(sorted(self.transpose_data, reverse=True))))
@@ -153,9 +173,12 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
                     deleted.add(tuple(second_row))
         for elem in deleted:
             self.transpose_data.pop(self.transpose_data.index(list(elem)))
+            has_reduction = True
         self.data = list(map(list, zip(*self.transpose_data)))
         self.set_table_data(self.data)
         self.save_table_values()
+
+        return has_reduction
 
     def get_max_col_array(self):
         transpose_data = self.transpose_data.copy()
