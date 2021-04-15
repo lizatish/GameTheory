@@ -48,10 +48,10 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
             n = len(self.data[0])
             m = len(self.data)
             if m > n:
-                data = self.transpose_data
+                data = self.transpose_data.copy()
                 n, m = m, n
             else:
-                data = self.data
+                data = self.data.copy()
 
             color = ['y', 'm', 'c', 'g', 'b', 'k', 'darkgreen', 'lightblue', 'darkblue', 'darkgreen']
             p1 = np.arange(2)
@@ -114,7 +114,28 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
                 # qstar = (q1star, q2star, q3star)
                 # self.maximin_first_player.setText(str(qstar))
             else:
-                pass
+                self.win_analyticgraphic.setText(str(win)[:7])
+
+                tr = map(list, zip(*data))
+                k = -1
+                for ix, line in enumerate(tr):
+                    if len(set(line)) == 1:
+                        k = ix
+                        break
+                l = clean_intersects[0][2]
+                s = clean_intersects[1][3]
+
+                c = (data[0][k] - data[1][l]) / (data[0][l] - data[1][l])
+                d = (data[0][k] - data[1][s]) / (data[0][s] - data[1][s])
+
+                W = float(abs(data[0][k]))
+                self.win_analyticgraphic_check.setText(str(W)[:7])
+                pstar = (c, d)
+                self.maximin_first_player.setText('(' + ', '.join(str(elem)[:4] for elem in pstar) + ')')
+
+                # TODO как посчитать вектор q
+                # qstar = (q1star, q2star, q3star)
+                # self.maximin_first_player.setText(str(qstar))
 
     def plot_mixed_strategy_solution_2in2(self):
         if self.data:
