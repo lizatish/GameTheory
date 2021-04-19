@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1114</width>
-    <height>830</height>
+    <height>887</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -414,8 +414,8 @@
   <widget class="QWidget" name="gridLayoutWidget_6">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>400</y>
+     <x>740</x>
+     <y>450</y>
      <width>351</width>
      <height>301</height>
     </rect>
@@ -437,8 +437,8 @@
   <widget class="QWidget" name="gridLayoutWidget_7">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>710</y>
+     <x>740</x>
+     <y>760</y>
      <width>351</width>
      <height>101</height>
     </rect>
@@ -501,6 +501,42 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QWidget" name="plot_2" native="true">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>460</y>
+     <width>343</width>
+     <height>237</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_16">
+   <property name="geometry">
+    <rect>
+     <x>367</x>
+     <y>770</y>
+     <width>227</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Кординаты точки пересечения: </string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="xy_analytic2in2_2">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>770</y>
+     <width>106</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
   </widget>
  </widget>
  <resources/>

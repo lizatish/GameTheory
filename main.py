@@ -154,6 +154,21 @@ class ExampleApp(QtWidgets.QWidget, design.Ui_Form):
             self.win_plot2in2.setText(str(round(y, 4)))
             self.xy_analytic2in2.setText(str(f'({str(round(x, 4))}, {str(round(y, 4))})'))
 
+            x = [0, 1]
+            y1 = [self.data[0][0], self.data[0][1]]
+            y2 = [self.data[1][0], self.data[1][1]]
+            self.plot_2.canvas.ax.plot(x, y1, color='lightblue', linewidth=1.5)
+            self.plot_2.canvas.ax.plot(x, y2, color='darkgreen', linewidth=1.5)
+            self.plot_2.canvas.ax.xaxis.set_data_interval(0, 1)
+            self.plot_2.canvas.ax.yaxis.set_data_interval(0, max(y2 + y1) + 5)
+
+            x, y = self.get_intersect((x[0], y1[0]), (x[1], y1[1]), (x[0], y2[0]), (x[1], y2[1]))
+            self.plot_2.canvas.ax.scatter(x, y, s=40, color='red')
+            self.xy_analytic2in2_2.setText(str(f'({str(round(x, 4))}, {str(round(y, 4))})'))
+            self.plot_2.canvas.ax.grid()
+            self.plot_2.canvas.draw()
+
+
     def get_mixed_strategy_solution_2in2(self):
         if self.data:
             h22 = self.data[1][1]
